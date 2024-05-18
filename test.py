@@ -1,7 +1,7 @@
 import sys
 
 import pygame
-from button import *
+from GameClass import *
 from pygame.locals import QUIT
 
 # 初始化
@@ -18,14 +18,16 @@ bg = bg.convert()
 bg.fill((221,221,221))  
 
 game_status = 0 # 0 = menu, 1=playing
+#test
 
+start_button = Button("Start",650,500,300,100,(0,0,0),60)
+quit_button = Button("Quit",650,650,300,100,(0,0,0),60)
+Game_Name = Text("BuckShot",800,400,150,(0,0,0))
 
 # 事件迴圈監聽事件，進行事件處理
 while True:
     # 迭代整個事件迴圈，若有符合事件則對應處理
     if game_status == 0:
-        start_button = Button("Start",650,500,300,100,(0,0,0))
-        quit_button = Button("Quit",650,650,300,100,(0,0,0))
         for event in pygame.event.get():
             # 當使用者結束視窗，程式也結束
             if event.type == QUIT:
@@ -43,15 +45,22 @@ while True:
         window_surface.fill((221, 221, 221))
         start_button.DrawButton(bg,window_surface)
         quit_button.DrawButton(bg,window_surface)
-        start_button.DrawTxT(bg,window_surface,font)
-        quit_button.DrawTxT(bg,window_surface,font)
+        start_button.DrawTxT(window_surface)
+        quit_button.DrawTxT(window_surface)
+        Game_Name.DrawTxT(window_surface)
 
         pygame.display.update()
     elif game_status == 1:
+        gun = Gun("GameJam/assets/gun.png",680,280,320,320)
+
         for event in pygame.event.get():
             # 當使用者結束視窗，程式也結束
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
         window_surface.fill((221, 221, 221))
+
+        gun.DrawImage(window_surface)
+
+
         pygame.display.update()
